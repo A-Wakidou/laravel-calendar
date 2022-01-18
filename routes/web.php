@@ -14,3 +14,6 @@ use App\Http\Controllers\CalendarController;
 */
 
 Route::get('/', [CalendarController::class, 'index']);
+Route::post('createEvent', [CalendarController::class, 'createEvent']);
+Route::post('editEvent', [CalendarController::class, 'editEvent']);
+Route::post('deleteEvent', [CalendarController::class, 'deleteEvent']);

@@ -18,6 +18,24 @@
                     events:events
                 });
                 calendar.render();
+                calendar.on('eventClick', function(info) {
+                    var modal = document.getElementById("editAndDeleteEventsModal");
+                    var idEditInput = document.getElementById("editEventsModalIdInput");
+                    idEditInput.value = info.event.id
+                    var idDeleteInput = document.getElementById("deleteEventsModalIdInput");
+                    idDeleteInput.value = info.event.id
+                    var titleInput = document.getElementById("editEventsModalTitleInput");
+                    titleInput.value = info.event.title
+                    var startDateInput = document.getElementById("editEventsModalStartDateInput");
+                    startDateInput.value = info.event.startStr.substr(0,16)
+                    var endDateInput = document.getElementById("editEventsModalEndDateInput");
+                    endDateInput.value = info.event.endStr.substr(0,16)
+                    modal.style.display = "block";
+                    var span = document.getElementsByClassName("close")[1];
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+                })
                 calendar.on('dateClick', function(info) {
                     var modal = document.getElementById("modal");
                     modal.style.display = "block";
@@ -25,13 +43,8 @@
                     span.onclick = function() {
                         modal.style.display = "none";
                     }
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                    }
-                    console.log(info.dateStr);
-                    console.log(info.dayEl);
+                    // console.log(info.dateStr);
+                    // console.log(info.dayEl);
                 });
             });
         </script>
@@ -49,7 +62,24 @@
                 text-align: center;
                 margin: 5% 0;
             }
-            .calendar {
+            button {
+                padding: 0.5% 1%;
+                margin: 0.5%;
+                color:white;
+                background-color: black;
+                border:none;
+                border-radius: 2px;
+            }
+            input {
+                border: 1px solid whitesmoke;
+                display: block;
+                margin: 0.5% auto;
+                margin-bottom: 2%;
+            }
+            form label {
+                display: block;
+            }
+            .calendar, .alerts {
                 margin: 5% 5%;
             }
             .modal {
@@ -71,12 +101,23 @@
                 overflow: auto; 
             }
 
-            .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
+            .editAndDeleteEventsModal {
+                border: 2px solid whitesmoke;
+                border-radius: 4px;
+                background-color: #fff;
+                position: absolute;
+                margin-left: auto;
+                margin-right: auto;
+                left: 0;
+                right: 0;
+                text-align: center;
+                display: none;
+                position: fixed;
+                z-index: 3;
+                top: 20%;
+                width: 50%;
+                height: 50%;
+                overflow: auto; 
             }
 
             .close {
@@ -97,19 +138,55 @@
 
     </head>
     <body>
+
         <h1>Full calendar view with Laravel</h1>
+
+        <div class="alerts">
+            @if(Session::get('success'))
+                    <span style="background-color:green; color:white"> {{Session::get('success')}} </span>
+                @endif
+                @if(Session::get('fail'))
+                    <span style="background-color:red; color:white"> {{Session::get('fail')}} </span>
+                @endif
+        </div>
+
         <div class="modal" id="modal">
             <h2>Ajouter un event</h2>
             <span class="close">&times;</span>
-            <form action="">
+            <form action="createEvent" method="POST">
+                @csrf 
                 <label for="title">Titre</label>
                 <input type="text" name="title">
                 <label for="startDate">Date de début</label>
                 <input type="datetime-local" name="startDate">
                 <label for="endDate">Date de fin</label>
                 <input type="datetime-local" name="endDate">
+                <button type="submit">Valider</button>
             </form>
         </div>
+
+        <div class="editAndDeleteEventsModal" id="editAndDeleteEventsModal">
+            <h2>Event</h2>
+            <span class="close">&times;</span>
+            <form action="editEvent" method="POST">
+                @csrf 
+                <input style="display:none" id="editEventsModalIdInput" name="id">
+                <label for="title">Titre</label>
+                <input type="text" id="editEventsModalTitleInput" name="title">
+                <label for="startDate">Date de début</label>
+                <input type="datetime-local" id="editEventsModalStartDateInput" name="startDate">
+                <label for="endDate">Date de fin</label>
+                <input type="datetime-local" id="editEventsModalEndDateInput" name="endDate">
+                <button type="submit">Modifier</button>
+            </form>
+            <form action="deleteEvent" method="POST">
+                @csrf 
+                <input style="display:none" id="deleteEventsModalIdInput" name="id">
+                <button style="background-color:red;">Supprimer</button>
+            </form>
+        </div>
+
         <div class="calendar" id="calendar"></div>
+
     </body>
 </html>
