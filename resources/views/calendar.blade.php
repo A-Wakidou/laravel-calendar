@@ -182,13 +182,13 @@
                     <span style="background-color:green; color:white padding: 0.5% 1%;"> {{Session::get('success')}} </span>
                 @endif
             @if(Session::get('createFail'))
-                <span style="background-color:red; color:white padding: 0.5% 1%;"> {{Session::get('fail')}} </span>
+                <span style="background-color:red; color:white; padding: 0.5% 1%;"> {{Session::get('fail')}} </span>
             @endif
             @if(Session::get('editSuccess'))
-                    <span style="background-color:blue; color:white padding: 0.5% 1%;"> {{Session::get('editSuccess')}} </span>
+                    <span style="background-color:black; color:white; padding: 0.5% 1%;"> {{Session::get('editSuccess')}} </span>
                 @endif
             @if(Session::get('deleteSuccess'))
-                <span style="background-color:red; color:white padding: 0.5% 1%;"> {{Session::get('deleteSuccess')}} </span>
+                <span style="background-color:red; color:white; padding: 0.5% 1%;"> {{Session::get('deleteSuccess')}} </span>
             @endif
         </div>
 
