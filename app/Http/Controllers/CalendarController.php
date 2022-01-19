@@ -31,10 +31,10 @@ class CalendarController extends Controller
             'end'=>$request->input('endDate'),
         ]);
         if($query) {
-            return back()->with('success', 'Event created');
+            return back()->with('createSuccess', 'Event created');
         }
         else {
-            return back()->with('fail', 'Something went wrong');
+            return back()->with('createFail', 'Something went wrong');
         }
     }
 
@@ -53,7 +53,7 @@ class CalendarController extends Controller
         $event->startDateTime = Carbon::parse($editItem->start);
         $event->endDateTime = Carbon::parse($editItem->end);
         $event->save();
-        return back();
+        return back()->with('editSuccess', 'Event edited');;
     }
 
     public function deleteEvent(Request $request) {
@@ -65,6 +65,6 @@ class CalendarController extends Controller
         //Google calendar
         $event = Event::find($deleteItem->google_calendar_event_id);
         $event->delete();
-        return back();
+        return back()->with('deleteSuccess', 'Event deleted');;
     }
 }

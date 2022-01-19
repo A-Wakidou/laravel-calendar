@@ -178,12 +178,18 @@
         <h1>Full calendar view with Laravel</h1>
         <hr>
         <div class="alerts">
-            @if(Session::get('success'))
+            @if(Session::get('createSuccess'))
                     <span style="background-color:green; color:white padding: 0.5% 1%;"> {{Session::get('success')}} </span>
                 @endif
-                @if(Session::get('fail'))
-                    <span style="background-color:red; color:white padding: 0.5% 1%;"> {{Session::get('fail')}} </span>
+            @if(Session::get('createFail'))
+                <span style="background-color:red; color:white padding: 0.5% 1%;"> {{Session::get('fail')}} </span>
+            @endif
+            @if(Session::get('editSuccess'))
+                    <span style="background-color:blue; color:white padding: 0.5% 1%;"> {{Session::get('editSuccess')}} </span>
                 @endif
+            @if(Session::get('deleteSuccess'))
+                <span style="background-color:red; color:white padding: 0.5% 1%;"> {{Session::get('deleteSuccess')}} </span>
+            @endif
         </div>
 
         <div class="modal" id="modal">
