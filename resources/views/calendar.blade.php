@@ -179,7 +179,7 @@
         <hr>
         <div class="alerts">
             @if(Session::get('createSuccess'))
-                    <span style="background-color:green; color:white padding: 0.5% 1%;"> {{Session::get('createSuccess')}} </span>
+                    <span style="background-color:green; color:white; padding: 0.5% 1%;"> {{Session::get('createSuccess')}} </span>
                 @endif
             @if(Session::get('createFail'))
                 <span style="background-color:red; color:white; padding: 0.5% 1%;"> {{Session::get('fail')}} </span>
